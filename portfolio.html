@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Adnaan Siddiqui — DevOps & Cloud Portfolio</title>
+  <meta name="description" content="DevOps & Cloud portfolio — Adnaan Siddiqui" />
+  <style>
+    /* ---------- Basic / layout ---------- */
+    :root{
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --muted: #64748b;
+      --accent: #4f46e5; /* indigo */
+      --accent-2: #06b6d4; /* teal */
+      --accent-3: #f59e0b; /* amber */
+      --accent-4: #10b981; /* green */
+      --accent-5: #ef4444; /* red */
+      --glass: rgba(15,23,42,0.04);
+      --radius: 14px;
+      --maxw: 1100px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Segoe UI Mono", monospace;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(180deg, var(--bg), #f1f5f9);
+      color: #0f172a;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding:28px;
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+      gap:20px;
+      min-height:100vh;
+    }
+    .wrap{
+      width:100%;
+      max-width:var(--maxw);
+      margin:0 auto;
+    }
+
+    .card{
+      background:var(--card);
+      border-radius:var(--radius);
+      box-shadow: 0 6px 30px rgba(2,6,23,0.08);
+      overflow:hidden;
+      border:1px solid rgba(2,6,23,0.04);
+    }
+
+    header{
+      display:flex;
+      gap:18px;
+      align-items:center;
+      justify-content:space-between;
+      padding:28px;
+      border-bottom: 1px solid rgba(2,6,23,0.04);
+    }
+
+    .profile-left{display:flex;gap:18px;align-items:center}
+    .avatar{
+      width:84px;height:84px;border-radius:12px;background:
+      linear-gradient(135deg, rgba(79,70,229,0.12), rgba(6,182,212,0.08));
+      display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--accent);
+      font-size:22px;border:1px solid rgba(79,70,229,0.06)
+    }
+    h1{margin:0;font-size:1.6rem;line-height:1.05}
+    .meta{color:var(--accent);font-weight:600;margin-top:6px}
+    .sub{color:var(--muted);font-size:0.95rem;margin-top:6px}
+
+    .socials{display:flex;gap:10px;margin-top:10px}
+    .socials a{
+      display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:8px;
+      text-decoration:none;color:#0f172a;background:transparent;border:1px solid rgba(2,6,23,0.04);
+      font-size:0.92rem;transition:all .18s ease;
+    }
+    .socials a:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(79,70,229,0.06)}
+
+    .avail{
+      background:linear-gradient(180deg,#f8fafc, #ffffff);
+      padding:14px;border-radius:12px;min-width:260px;display:flex;gap:12px;align-items:center;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
+      transition:transform .18s ease;
+    }
+    .avail:hover{transform:translateY(-4px)}
+    .cloud-ico{width:48px;height:48px;border-radius:10px;background:var(--card);display:flex;align-items:center;justify-content:center;border:1px solid rgba(2,6,23,0.04)}
+    .avail .title{font-size:0.78rem;color:var(--muted)} .avail .status{font-weight:700}
+
+    /* ---------- Main body grid ---------- */
+    main{display:grid;grid-template-columns:1fr 2fr;gap:20px;padding:22px}
+    @media (max-width:900px){ main{grid-template-columns:1fr;padding:18px; } header{flex-direction:column;align-items:flex-start} .avail{width:100%} }
+
+    aside{display:flex;flex-direction:column;gap:14px}
+    section.card-block{background:var(--card);padding:18px;border-radius:12px;border:1px solid rgba(2,6,23,0.03)}
+
+    /* ---------- Skills (animated bars) ---------- */
+    .skills-list{display:flex;flex-direction:column;gap:12px;margin-top:10px}
+    .skill-row{display:flex;align-items:center;gap:10px}
+    .skill-name{width:120px;font-size:0.92rem;color:#0f172a}
+    .skill-bar{flex:1;background:linear-gradient(90deg,#f1f5f9, #eef2ff);height:12px;border-radius:999px;position:relative;overflow:hidden;border:1px solid rgba(2,6,23,0.03)}
+    .skill-fill{height:100%;border-radius:999px;width:0%;display:block;transform-origin:left center;}
+    .skill-val{width:56px;text-align:right;color:var(--muted);font-size:0.92rem}
+
+    /* colors for fills */
+    .fill-1{background:linear-gradient(90deg,var(--accent), #6366f1)}
+    .fill-2{background:linear-gradient(90deg,var(--accent-2), #06b6d4)}
+    .fill-3{background:linear-gradient(90deg,var(--accent-3), #f59e0b)}
+    .fill-4{background:linear-gradient(90deg,var(--accent-4), #10b981)}
+    .fill-5{background:linear-gradient(90deg,var(--accent-5), #ef4444)}
+
+    /* animation */
+    @keyframes barGrow { from { width:0% } to { width: var(--pct) } }
+    .skill-fill{ animation: barGrow 900ms cubic-bezier(.2,.9,.3,1) forwards; }
+
+    /* ---------- Projects ---------- */
+    .projects-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    @media (max-width:700px){ .projects-grid{grid-template-columns:1fr} }
+    .proj{
+      background:linear-gradient(180deg, #fff, #fbfdff);
+      padding:14px;border-radius:10px;border:1px solid rgba(2,6,23,0.04);
+      transition:transform .18s ease, box-shadow .18s ease;
+      display:flex;flex-direction:column;gap:10px;
+    }
+    .proj:hover{transform: translateY(-8px); box-shadow: 0 18px 40px rgba(2,6,23,0.08)}
+    .proj h4{margin:0;font-size:1rem}
+    .proj p{margin:0;color:var(--muted);font-size:0.92rem}
+    .techs{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+    .tag{font-size:0.8rem;background: #f8fafc;padding:6px 8px;border-radius:8px;color:#0f172a;border:1px solid rgba(2,6,23,0.03)}
+
+    .proj-actions{display:flex;gap:8px;align-items:center;justify-content:flex-end;margin-top:auto}
+    .btn{display:inline-flex;gap:8px;align-items:center;padding:8px 10px;border-radius:8px;border:1px solid rgba(2,6,23,0.05);text-decoration:none;color:#0f172a;font-weight:600;background:transparent;transition:all .16s ease}
+    .btn:hover{transform:translateY(-3px);box-shadow:0 10px 26px rgba(2,6,23,0.06)}
+
+    /* ---------- Experience ---------- */
+    .timeline{display:flex;flex-direction:column;gap:12px}
+    .job{background:linear-gradient(180deg,#fff,#fbfdff);padding:10px;border-radius:8px;border:1px solid rgba(2,6,23,0.03)}
+    .job .meta{font-size:0.82rem;color:var(--muted)}
+
+    /* ---------- Contact actions ---------- */
+    .contact-row{display:flex;gap:10px}
+    .cta{flex:1;padding:12px;border-radius:10px;border:1px dashed rgba(2,6,23,0.06);display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;color:#0f172a;background:transparent;font-weight:700}
+    .cta:hover{background:linear-gradient(180deg,#f8fafc,#ffffff);transform:translateY(-3px)}
+
+    footer{padding:12px;text-align:center;color:var(--muted);font-size:0.9rem;border-top:1px solid rgba(2,6,23,0.02)}
+
+    /* ---------- Entrance animations ---------- */
+    .fade-up{opacity:0;transform:translateY(10px);animation:fadeUp .6s ease forwards}
+    .stagger-1{animation-delay:.08s}
+    .stagger-2{animation-delay:.16s}
+    .stagger-3{animation-delay:.24s}
+    .stagger-4{animation-delay:.32s}
+    @keyframes fadeUp{ to{opacity:1;transform:none} }
+
+    /* small floating cloud */
+    @keyframes floaty{ 0%{transform:translateY(0)}50%{transform:translateY(-6px)}100%{transform:translateY(0)} }
+    .cloud-animated{animation:floaty 3.2s ease-in-out infinite}
+
+    /* small responsive polish */
+    .updated{color:var(--muted);font-size:0.88rem}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card" role="region" aria-label="DevOps Cloud portfolio">
+      <header>
+        <div class="profile-left">
+          <div class="avatar fade-up stagger-1" aria-hidden="true">AS</div>
+          <div>
+            <h1 class="fade-up stagger-2">Adnaan Akthar Siddiqui</h1>
+            <div class="meta fade-up stagger-3">DevOps Engineer — Cloud & DevOps</div>
+            <div class="sub fade-up stagger-4">Dubai, UAE</div>
+
+            <div class="socials fade-up stagger-4" style="margin-top:8px">
+              <a href="https://linkedin.com/in/adnaan-siddiqui" target="_blank" rel="noreferrer" aria-label="LinkedIn">
+                <!-- LinkedIn SVG -->
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="display:block">
+                  <path d="M4.98 3.5C4.98 4.88 3.87 6 2.49 6 1.11 6 0 4.88 0 3.5 0 2.12 1.11 1 2.49 1 3.87 1 4.98 2.12 4.98 3.5z" fill="#0f172a"/>
+                  <path d="M0 8.98H4.98V24H0z" fill="#0f172a" opacity="0.06"/>
+                  <path d="M7.5 8.98h4.78v2.05h.07c.67-1.27 2.3-2.6 4.74-2.6 5.08 0 6.02 3.34 6.02 7.68V24H18.03v-7.85c0-1.87-.03-4.28-2.61-4.28-2.61 0-3.01 2.04-3.01 4.14V24H7.5z" fill="#0f172a" opacity="0.08"/>
+                </svg>
+                LinkedIn
+              </a>
+
+              <a href="https://github.com/adnaan-siddiquibz" target="_blank" rel="noreferrer" aria-label="GitHub">
+                <!-- GitHub SVG -->
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="display:block">
+                  <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.52-1.33-1.27-1.69-1.27-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.75 1.18 1.75 1.18 1.02 1.74 2.68 1.24 3.33.95.1-.74.4-1.24.73-1.53-2.56-.29-5.26-1.28-5.26-5.69 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.46.11-3.04 0 0 .96-.31 3.14 1.18a10.9 10.9 0 012.86-.38c.97.01 1.95.13 2.86.38 2.18-1.49 3.14-1.18 3.14-1.18.62 1.58.23 2.75.12 3.04.74.81 1.18 1.84 1.18 3.1 0 4.42-2.71 5.4-5.29 5.68.41.36.77 1.07.77 2.15 0 1.55-.01 2.8-.01 3.18 0 .31.21.68.8.56A11.52 11.52 0 0023.5 12C23.5 5.65 18.35.5 12 .5z" fill="#0f172a"/>
+                </svg>
+                GitHub
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="avail fade-up stagger-2" aria-hidden="false">
+          <div class="cloud-ico cloud-animated" title="Availability">
+            <!-- cloud svg -->
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
+              <path d="M20 17.58A4.42 4.42 0 0015.58 13h-1.1A6 6 0 106 19h9.5" stroke="#0f172a" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+            </svg>
+          </div>
+          <div>
+            <div class="title">Availability</div>
+            <div class="status">Open to roles — Entry / Junior Cloud & DevOps</div>
+          </div>
+        </div>
+      </header>
+
+      <main>
+        <!-- Left column -->
+        <aside>
+          <div class="card-block fade-up stagger-1">
+            <h3 style="margin:0 0 8px 0">Profile</h3>
+            <p style="margin:0;color:var(--muted)">Career-transitioning Cloud & DevOps engineer with hands-on experience in AWS, CI/CD, containerization and automation. Strong process ownership, scripting and ops experience.</p>
+            <div style="margin-top:12px;display:flex;gap:8px;align-items:center;color:var(--muted);font-size:0.93rem">
+              <!-- mail icon -->
+              <svg width="16" height="16" viewBox="0 0 24 24"><path d="M3 7.5V18a2 2 0 002 2h14a2 2 0 002-2V7.5l-9 5.25L3 7.5z" fill="#0f172a" opacity="0.06"/><path d="M21 6H3v-.5A2.5 2.5 0 015.5 3h13A2.5 2.5 0 0121 5.5V6z" fill="#0f172a" opacity="0.04"/></svg>
+              <a href="mailto:adnansiddiquibz@gmail.com" style="text-decoration:underline;color:inherit">adnansiddiquibz@gmail.com</a>
+            </div>
+          </div>
+
+          <div class="card-block fade-up stagger-2">
+            <h3 style="margin:0 0 8px 0">Technical Snapshot</h3>
+            <ul style="margin:0;color:var(--muted);padding-left:18px;margin-top:6px">
+              <li>Cloud: AWS (EC2, S3, Lambda, IAM, CloudFront, DynamoDB)</li>
+              <li>CI/CD: Jenkins, GitHub Actions</li>
+              <li>Containers: Docker (Kubernetes basics)</li>
+              <li> IaC & Scripting: Terraform (intro), Bash, Python</li>
+              <li>Monitoring: CloudWatch, logging, alerting</li>
+            </ul>
+          </div>
+
+          <div class="card-block fade-up stagger-3">
+            <h3 style="margin:0 0 8px 0">Top Skills</h3>
+            <div class="skills-list" aria-hidden="false">
+              <!-- skill rows — JS will animate widths on load -->
+              <div class="skill-row">
+                <div class="skill-name">AWS</div>
+                <div class="skill-bar"><span class="skill-fill fill-1" style="--pct:30%"></span></div>
+                <div class="skill-val">30%</div>
+              </div>
+              <div class="skill-row">
+                <div class="skill-name">CI/CD</div>
+                <div class="skill-bar"><span class="skill-fill fill-2" style="--pct:25%"></span></div>
+                <div class="skill-val">25%</div>
+              </div>
+              <div class="skill-row">
+                <div class="skill-name">Docker / K8s</div>
+                <div class="skill-bar"><span class="skill-fill fill-3" style="--pct:15%"></span></div>
+                <div class="skill-val">15%</div>
+              </div>
+              <div class="skill-row">
+                <div class="skill-name">Infra as Code</div>
+                <div class="skill-bar"><span class="skill-fill fill-4" style="--pct:15%"></span></div>
+                <div class="skill-val">15%</div>
+              </div>
+              <div class="skill-row">
+                <div class="skill-name">Monitoring</div>
+                <div class="skill-bar"><span class="skill-fill fill-5" style="--pct:15%"></span></div>
+                <div class="skill-val">15%</div>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Right column -->
+        <section style="display:flex;flex-direction:column;gap:12px">
+          <div class="card-block fade-up stagger-1">
+            <div style="display:flex;justify-content:space-between;align-items:start">
+              <div>
+                <h2 style="margin:0 0 6px 0">Projects</h2>
+                <div style="color:var(--muted)">Selected DevOps & Cloud implementations with links and tech used.</div>
+              </div>
+              <div class="updated">Updated: Aug 8, 2025</div>
+            </div>
+
+            <div style="margin-top:14px" class="projects-grid">
+              <article class="proj">
+                <div style="display:flex;justify-content:space-between;align-items:start;gap:10px">
+                  <div style="flex:1">
+                    <h4>CI/CD Pipeline for Node.js App</h4>
+                    <p>Jenkins + Git + AWS EC2 pipeline with rollback and monitoring integration.</p>
+                    <div class="techs">
+                      <span class="tag">Jenkins</span>
+                      <span class="tag">AWS EC2</span>
+                      <span class="tag">Bash</span>
+                      <span class="tag">Git</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="proj-actions" style="margin-top:12px">
+                  <a class="btn" href="#" target="_blank" rel="noreferrer">View
+                    <svg width="14" height="14" viewBox="0 0 24 24" style="display:block"><path d="M5 12h14" stroke="#0f172a" stroke-width="1.4" stroke-linecap="round"/></svg>
+                  </a>
+                  <a class="btn" href="https://github.com/adnaan-siddiquibz" target="_blank" rel="noreferrer">Source
+                    <svg width="14" height="14" viewBox="0 0 24 24" style="display:block"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.52-1.33-1.27-1.69-1.27-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.75 1.18 1.75 1.18 1.02 1.74 2.68 1.24 3.33.95.1-.74.4-1.24.73-1.53-2.56-.29-5.26-1.28-5.26-5.69 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.46.11-3.04 0 0 .96-.31 3.14 1.18a10.9 10.9 0 012.86-.38c.97.01 1.95.13 2.86.38 2.18-1.49 3.14-1.18 3.14-1.18.62 1.58.23 2.75.12 3.04.74.81 1.18 1.84 1.18 3.1 0 4.42-2.71 5.4-5.29 5.68.41.36.77 1.07.77 2.15 0 1.55-.01 2.8-.01 3.18 0 .31.21.68.8.56A11.52 11.52 0 0023.5 12C23.5 5.65 18.35.5 12 .5z" fill="#0f172a"/></svg>
+                  </a>
+                </div>
+              </article>
+
+              <article class="proj">
+                <h4>AWS Static Site + Visitor Counter (Serverless)</h4>
+                <p>S3 + CloudFront + Lambda + DynamoDB serverless visitor counter.</p>
+                <div class="techs" style="margin-top:8px">
+                  <span class="tag">AWS</span><span class="tag">Lambda</span><span class="tag">DynamoDB</span><span class="tag">CloudFront</span>
+                </div>
+                <div class="proj-actions" style="margin-top:12px">
+                  <a class="btn" href="#" target="_blank" rel="noreferrer">View</a>
+                  <a class="btn" href="https://github.com/adnaan-siddiquibz" target="_blank" rel="noreferrer">Source</a>
+                </div>
+              </article>
+
+              <article class="proj">
+                <h4>Dockerized Nginx Static Server</h4>
+                <p>Optimized Dockerfile and local dev workflow for static hosting.</p>
+                <div class="techs" style="margin-top:8px">
+                  <span class="tag">Docker</span><span class="tag">Nginx</span>
+                </div>
+                <div class="proj-actions" style="margin-top:12px">
+                  <a class="btn" href="#" target="_blank" rel="noreferrer">View</a>
+                  <a class="btn" href="https://github.com/adnaan-siddiquibz" target="_blank" rel="noreferrer">Source</a>
+                </div>
+              </article>
+
+              <article class="proj" style="grid-column:span 2">
+                <h4>Custom Tools & Scripts</h4>
+                <p>Collection of Bash scripts and small tools for deployment automation, log rotation and lightweight monitoring.</p>
+                <div class="techs" style="margin-top:8px">
+                  <span class="tag">Bash</span><span class="tag">Python</span><span class="tag">Git</span>
+                </div>
+                <div class="proj-actions" style="margin-top:12px">
+                  <a class="btn" href="#" target="_blank" rel="noreferrer">View</a>
+                  <a class="btn" href="https://github.com/adnaan-siddiquibz" target="_blank" rel="noreferrer">Source</a>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <div class="card-block fade-up stagger-2">
+            <h3 style="margin:0 0 8px 0">Experience & Education</h3>
+            <div class="timeline" style="margin-top:8px">
+              <div class="job">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <div style="font-weight:600">Operations Associate — PR Newswire (Cision)</div>
+                  <div class="meta">Feb 2024 — July 2025</div>
+                </div>
+                <ul style="margin-top:8px;color:var(--muted);padding-left:18px">
+                  <li>Managed editorial operations and workflows; improved process timelines by 15%.</li>
+                  <li>Applied SLA and release scheduling practices transferable to deployment cycles.</li>
+                </ul>
+              </div>
+
+              <div class="job">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <div style="font-weight:600">Cloud & DevOps Bootcamp — GUVI (IIT Madras)</div>
+                  <div class="meta">2023 — Capstone: CI/CD & AWS</div>
+                </div>
+              </div>
+
+              <div class="job">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <div style="font-weight:600">B.Com (Computer Applications)</div>
+                  <div class="meta">Veda Degree College — 2024</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-block fade-up stagger-3">
+            <h3 style="margin:0 0 8px 0">Contact & Quick Actions</h3>
+            <div style="margin-top:12px">
+              <div class="contact-row">
+                <a class="cta" href="mailto:adnansiddiquibz@gmail.com"><svg width="16" height="16" viewBox="0 0 24 24" style="display:block"><path d="M3 7.5V18a2 2 0 002 2h14a2 2 0 002-2V7.5l-9 5.25L3 7.5z" fill="#0f172a" opacity="0.06"/><path d="M21 6H3v-.5A2.5 2.5 0 015.5 3h13A2.5 2.5 0 0121 5.5V6z" fill="#0f172a" opacity="0.04"/></svg> Email Me</a>
+                <a class="cta" href="https://github.com/adnaan-siddiquibz" target="_blank" rel="noreferrer"><svg width="16" height="16" viewBox="0 0 24 24" style="display:block"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.52-1.33-1.27-1.69-1.27-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.75 1.18 1.75 1.18 1.02 1.74 2.68 1.24 3.33.95.1-.74.4-1.24.73-1.53-2.56-.29-5.26-1.28-5.26-5.69 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.46.11-3.04 0 0 .96-.31 3.14 1.18a10.9 10.9 0 012.86-.38c.97.01 1.95.13 2.86.38 2.18-1.49 3.14-1.18 3.14-1.18.62 1.58.23 2.75.12 3.04.74.81 1.18 1.84 1.18 3.1 0 4.42-2.71 5.4-5.29 5.68.41.36.77 1.07.77 2.15 0 1.55-.01 2.8-.01 3.18 0 .31.21.68.8.56A11.52 11.52 0 0023.5 12C23.5 5.65 18.35.5 12 .5z" fill="#0f172a"/></svg> GitHub</a>
+                <a class="cta" href="https://linkedin.com/in/adnaan-siddiqui" target="_blank" rel="noreferrer"><svg width="16" height="16" viewBox="0 0 24 24"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.49 6 1.11 6 0 4.88 0 3.5 0 2.12 1.11 1 2.49 1 3.87 1 4.98 2.12 4.98 3.5z" fill="#0f172a"/></svg> LinkedIn</a>
+              </div>
+              <div style="margin-top:10px;color:var(--muted)">Or paste your resume to get a tailored 'about' section for this portfolio.</div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer>Built with ❤️ for Cloud & DevOps — live demos and deploy help available on request.</footer>
+    </div>
+  </div>
+
+  <script>
+    // Animate skill bars on page load with small stagger
+    (function(){
+      const fills = Array.from(document.querySelectorAll('.skill-fill'));
+      fills.forEach((el, idx) => {
+        const pct = el.style.getPropertyValue('--pct') || el.getAttribute('data-pct') || '0%';
+        // apply as CSS variable to animate to
+        el.style.setProperty('--target-pct', pct);
+        // staggered timeout
+        setTimeout(() => {
+          el.style.width = pct;
+        }, 120 * idx + 120);
+      });
+
+      // small accessibility: reveal fades for elements with fade-up
+      Array.from(document.querySelectorAll('.fade-up')).forEach((el,i)=>{
+        el.style.animationDelay = (i*60)+'ms';
+      });
+    })();
+  </script>
+</body>
+</html>
