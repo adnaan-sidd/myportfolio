@@ -1,0 +1,26 @@
+name: Deploy to Nginx Server
+
+on:
+  push:
+    branches:
+      - main  # or your default branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+
+      - name: Deploy portfolio.html to server
+        run: |
+          scp -i ~/.ssh/id_rsa portfolio.html ubuntu@${{ secrets.SERVER_IP }}:/tmp/portfolio.html
+          ssh -i ~/.ssh/id_rsa ubuntu@${{ secrets.SERVER_IP }} "sudo mv /tmp/portfolio.html /var/www/html/portfolio.html && sudo chown www-data:www-data /var/www/html/portfolio.html && sudo chmod 644 /var/www/html/portfolio.html"
